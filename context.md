@@ -16,7 +16,7 @@ A reputation-scored, filterable AI-events calendar (single self-contained `index
 ## Deploy / infra
 - **Host:** Vercel project `ai-events-calendar` (scope `minitech782-5101` / `hvs-projects-470139d8`). Static — `index.html` at root.
 - **Domain:** `calendar.blizzardcollective.xyz` — live. Record on Cloudflare (zone `blizzardcollective.xyz`, id `6cd0a0f64ee19f73f43e1a77927b27c3`): `A calendar → 76.76.21.21`, proxy OFF (DNS-only).
-- **DNS automation (DONE — permanent):** a Cloudflare API token (Zone:DNS:Edit + Zone:Read, all 11 zones) is set as `CLOUDFLARE_API_TOKEN` in **`~/.zshenv`** — verified active and edit-capable (create+delete test passed). Any agent/tool shell can now manage DNS for every domain hands-off.
+- **DNS automation (DONE — permanent):** a Cloudflare API token (Zone:DNS:Edit + Zone:Read, all 11 zones) is set as **`CLOUDFLARE_DNS_API_TOKEN`** in **`~/.zshenv`** — verified active and edit-capable. Any agent/tool shell can manage DNS for every domain hands-off. NOTE: it's deliberately NOT named `CLOUDFLARE_API_TOKEN`, because that name would shadow wrangler's own OAuth login and break Workers/KV/Pages deploys. Keep DNS on `CLOUDFLARE_DNS_API_TOKEN`; let wrangler use its OAuth (`~/.config/.wrangler`, scopes: workers/workers_kv/workers_routes write).
 - **Gotcha for future sessions:** tool shells run as **non-interactive `zsh -c`**, which source ONLY `~/.zshenv` (NOT `~/.zshrc`/`~/.zprofile`). Env vars meant for agents MUST live in `~/.zshenv`. (wrangler's OAuth token is `workers:write` only — no DNS. Per-zone fallback tokens also exist in `~/.cloudflared/cert.<zone>.pem.*` from `cloudflared tunnel login`.)
 - Redeploy with `vercel --prod` from repo root.
 
