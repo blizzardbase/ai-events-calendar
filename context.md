@@ -16,7 +16,8 @@ A reputation-scored, filterable AI-events calendar (single self-contained `index
 ## Deploy / infra
 - **Host:** Vercel project `ai-events-calendar` (scope `minitech782-5101` / `hvs-projects-470139d8`). Static — `index.html` at root.
 - **Domain:** `calendar.blizzardcollective.xyz` — live. Record on Cloudflare (zone `blizzardcollective.xyz`, id `6cd0a0f64ee19f73f43e1a77927b27c3`): `A calendar → 76.76.21.21`, proxy OFF (DNS-only).
-- **DNS automation:** wrangler's OAuth token is `workers:write` only (no DNS). DNS edits use the per-zone API token embedded in `~/.cloudflared/cert.blizzardcollective.xyz.pem.*` (cloudflared `tunnel login` credential). The active `~/.cloudflared/cert.pem` is for `itshv.com`; per-zone backups exist for each domain. **Permanent fix:** create a Cloudflare API token (Zone:DNS:Edit + Zone:Read, all zones) and export `CLOUDFLARE_API_TOKEN` in `~/.zshrc` so any session can edit DNS for any domain without per-zone certs.
+- **DNS automation (DONE — permanent):** a Cloudflare API token (Zone:DNS:Edit + Zone:Read, all 11 zones) is set as `CLOUDFLARE_API_TOKEN` in **`~/.zshenv`** — verified active and edit-capable (create+delete test passed). Any agent/tool shell can now manage DNS for every domain hands-off.
+- **Gotcha for future sessions:** tool shells run as **non-interactive `zsh -c`**, which source ONLY `~/.zshenv` (NOT `~/.zshrc`/`~/.zprofile`). Env vars meant for agents MUST live in `~/.zshenv`. (wrangler's OAuth token is `workers:write` only — no DNS. Per-zone fallback tokens also exist in `~/.cloudflared/cert.<zone>.pem.*` from `cloudflared tunnel login`.)
 - Redeploy with `vercel --prod` from repo root.
 
 ## Data provenance
