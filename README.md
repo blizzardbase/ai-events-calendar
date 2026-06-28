@@ -4,7 +4,7 @@ An opinionated, **reputation-scored** calendar of the AI events worth your time 
 
 It's a single self-contained HTML page. No server, no build step to view it, no tracking. Open it, filter, and click **Going / Maybe / Skip** on events — your picks are saved in your browser and exportable to your real calendar as an `.ics` file.
 
-**Live:** https://calendar.blizzardcollective.xyz
+**Live:** https://calendar.blizzardcollective.xyz · (mirror: https://ai-events-calendar-ruddy.vercel.app)
 
 ![events](https://img.shields.io/badge/events-121-blue) ![window](https://img.shields.io/badge/window-Jul%202026%E2%80%93Jun%202027-green) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
 

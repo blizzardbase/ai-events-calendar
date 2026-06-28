@@ -10,12 +10,13 @@ A reputation-scored, filterable AI-events calendar (single self-contained `index
 - ✅ Interactive dashboard: filters (search/category/region/relevance/min-reputation), Going/Maybe/Skip marks persisted in `localStorage`, My-plan view, `.ics` export.
 - ✅ Single-source generator `build_ai_calendar.py` (stdlib only) → emits `index.html` + `ai-events-data.json`.
 - ✅ Git repo initialized; pushed to GitHub `blizzardbase/ai-events-calendar` (public, MIT).
-- ✅ Deployed to Vercel.
+- ✅ Deployed to Vercel (production): https://ai-events-calendar-ruddy.vercel.app
+- ⏳ Custom domain `calendar.blizzardcollective.xyz` attached to the Vercel project — **DNS record pending** (see Deploy/infra).
 
 ## Deploy / infra
 - **Host:** Vercel project `ai-events-calendar` (scope `minitech782-5101` / `hvs-projects-470139d8`). Static — `index.html` at root.
-- **Domain:** `calendar.blizzardcollective.xyz`. DNS zone is on **Cloudflare** (proxied apex). Subdomain needs: `CNAME calendar → cname.vercel-dns.com`, **proxy OFF (grey cloud)**.
-- The local wrangler/Cloudflare token only has `workers:write` — it CANNOT edit DNS. The CNAME was added manually in the Cloudflare dashboard (or via a DNS-scoped API token if one is later provided).
+- **Domain:** `calendar.blizzardcollective.xyz` — attached to the Vercel project; **DNS pending**. Add ONE record on Cloudflare (zone `blizzardcollective.xyz`): `A  calendar  76.76.21.21`, **proxy OFF (grey cloud / DNS only)** — Vercel's recommended record. (A `CNAME calendar → cname.vercel-dns.com`, proxy off, also works.) Vercel auto-verifies and issues SSL once the record exists.
+- The local wrangler/Cloudflare token only has `workers:write` — it CANNOT edit DNS, so this record must be added in the Cloudflare dashboard (or via a DNS-scoped API token if one is later added to the env).
 - Redeploy with `vercel --prod` from repo root.
 
 ## Data provenance
