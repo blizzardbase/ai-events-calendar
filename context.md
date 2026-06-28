@@ -11,12 +11,12 @@ A reputation-scored, filterable AI-events calendar (single self-contained `index
 - ✅ Single-source generator `build_ai_calendar.py` (stdlib only) → emits `index.html` + `ai-events-data.json`.
 - ✅ Git repo initialized; pushed to GitHub `blizzardbase/ai-events-calendar` (public, MIT).
 - ✅ Deployed to Vercel (production): https://ai-events-calendar-ruddy.vercel.app
-- ⏳ Custom domain `calendar.blizzardcollective.xyz` attached to the Vercel project — **DNS record pending** (see Deploy/infra).
+- ✅ Custom domain `calendar.blizzardcollective.xyz` live: `A calendar → 76.76.21.21` (DNS-only) created on Cloudflare; Vercel auto-issues SSL.
 
 ## Deploy / infra
 - **Host:** Vercel project `ai-events-calendar` (scope `minitech782-5101` / `hvs-projects-470139d8`). Static — `index.html` at root.
-- **Domain:** `calendar.blizzardcollective.xyz` — attached to the Vercel project; **DNS pending**. Add ONE record on Cloudflare (zone `blizzardcollective.xyz`): `A  calendar  76.76.21.21`, **proxy OFF (grey cloud / DNS only)** — Vercel's recommended record. (A `CNAME calendar → cname.vercel-dns.com`, proxy off, also works.) Vercel auto-verifies and issues SSL once the record exists.
-- The local wrangler/Cloudflare token only has `workers:write` — it CANNOT edit DNS, so this record must be added in the Cloudflare dashboard (or via a DNS-scoped API token if one is later added to the env).
+- **Domain:** `calendar.blizzardcollective.xyz` — live. Record on Cloudflare (zone `blizzardcollective.xyz`, id `6cd0a0f64ee19f73f43e1a77927b27c3`): `A calendar → 76.76.21.21`, proxy OFF (DNS-only).
+- **DNS automation:** wrangler's OAuth token is `workers:write` only (no DNS). DNS edits use the per-zone API token embedded in `~/.cloudflared/cert.blizzardcollective.xyz.pem.*` (cloudflared `tunnel login` credential). The active `~/.cloudflared/cert.pem` is for `itshv.com`; per-zone backups exist for each domain. **Permanent fix:** create a Cloudflare API token (Zone:DNS:Edit + Zone:Read, all zones) and export `CLOUDFLARE_API_TOKEN` in `~/.zshrc` so any session can edit DNS for any domain without per-zone certs.
 - Redeploy with `vercel --prod` from repo root.
 
 ## Data provenance
